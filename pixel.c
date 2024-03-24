@@ -3,7 +3,7 @@ extern Gui gui;
 extern Pen pen;
 
 void MyDrawPixelCanvas(pixel* screen,Vector2 pos,Color color){
-    if(pos.x-1 < gui.CanvasBottomRight.x && pos.x-1 > gui.CanvasTopLeft.x && pos.y-1 > gui.CanvasTopLeft.y && pos.y < gui.CanvasBottomRight.y){
+    if(pos.x < gui.CanvasBottomRight.x && pos.x > gui.CanvasTopLeft.x && pos.y > gui.CanvasTopLeft.y && pos.y < gui.CanvasBottomRight.y){
         screen[(int)(gui.screenwidth)*(int)pos.y + (int)(pos.x)] = (pixel){color};
     }
 }
