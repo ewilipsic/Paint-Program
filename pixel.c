@@ -357,8 +357,6 @@ void DrawScreen(pixel* screen){
         }
         
     }
-
-
     for(int i = 0;i<gui.num_buttons;i++){
         if(gui.buttons[i].ispressed){
        
@@ -374,6 +372,8 @@ void DrawScreen(pixel* screen){
     for(int i = 0;i<gui.num_textboxes;i++){
         Draw_Textboxes(gui.textboxes[i]);
     }
+    DrawRectangle(25,315,130,60,RED);
+    DrawRectangle(30,320,120,50,pen.color);
 
 }
 

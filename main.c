@@ -59,7 +59,7 @@ int main(){
      
         switch (window){
         case super:
-        printf("speed : %f",speed);
+        //printf("speed : %f",speed);
         deltatime = GetFrameTime();
    
         if(rings.arr[0].radius < 500){
@@ -373,6 +373,12 @@ int main(){
         }
 
         if(curdown){
+            if(!eraser_on){
+                pen.color = (Color){(int)(255 * gui.sliders[0].slide),
+                                    (int)(255 * gui.sliders[1].slide),
+                                    (int)(255 * gui.sliders[2].slide),255};
+            }
+            
             if(moveslider){
                 slider s = gui.sliders[moveslider-1];
                 if(CheckCollisionPointRec(pos,(Rectangle){s.pos.x,s.pos.y - (s.rect_dim.y - s.bar_dim.y)/2,s.bar_dim.x,s.rect_dim.y})){
@@ -396,12 +402,6 @@ int main(){
             }
         }
         if(!curdown){
-
-            if(!eraser_on){
-                pen.color = (Color){(int)(255 * gui.sliders[0].slide),
-                                    (int)(255 * gui.sliders[1].slide),
-                                    (int)(255 * gui.sliders[2].slide),255};
-            }
 
             if(points.len != 0){
                 int i  = 0;
