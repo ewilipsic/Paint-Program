@@ -282,6 +282,45 @@ void FillToolActivation(void* a,void* b,void* c,void* d){
     ((button*)d)->ispressed = true;
 }
 
+void EyeDropper(void* a,void* b,void* c,void*d){
+    bool* curdown = (bool*)a;
+    *curdown = false;
+    state = eyedropper;
+    ((button*)d)->ispressed = true;
+}
+
+void LoadReference(void* a,void* b,void* c,void* d){
+    Texture2D* ref = (Texture2D*)a; 
+    bool* ref_on = (bool*)b;
+    Rectangle* reference_destrect = (Rectangle*)c;
+    Vector2* reference_origin = (Vector2*)d;
+    if(*ref_on){
+        *ref_on = false;
+        *reference_destrect = (Rectangle){800,400,ref->width,ref->height};
+        *reference_origin = (Vector2){ref->width/2,ref->height/2};
+        UnloadTexture(*ref);
+    }
+    else{
+        *ref_on = true;
+        *ref = LoadTexture(gui.textboxes[5].text);
+        *reference_destrect = (Rectangle){800,400,ref->width,ref->height};
+        *reference_origin = (Vector2){ref->width/2,ref->height/2};
+    }
+}
+
+void MoveReference(void* a,void* b,void* c,void* d){
+    bool* curdown = (bool*)a;
+    *curdown = false;
+    state = moveref; 
+    ((button*)d)->ispressed = true;
+
+    Rectangle* reference_destrect = (Rectangle*) c;
+    *((Vector2*)b) =  Vector2Minus((Vector2){reference_destrect->x,reference_destrect->y},GetMousePosition());
+
+}
+
+
+
 
 
 

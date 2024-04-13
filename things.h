@@ -7,7 +7,7 @@
 #include<string.h>
 #include<math.h>
 
-enum State {normal,rect,ellipse,line,HollowRect,HollowEllipse,Bucket};
+enum State {normal,rect,ellipse,line,HollowRect,HollowEllipse,Bucket,eyedropper,moveref};
 enum Window {paint,super};
 typedef struct{
     int thickness;
@@ -135,6 +135,7 @@ void ClearMask(pixel* mask);
 void DrawSymHollowRectangle(pixel* screen,Vector2 top_left,Vector2 bottom_right,int thickness,Color color);
 void DrawObliqueRect(pixel* screen,Vector2 a,Vector2 b ,Vector2 c);
 
+
 //vector.c
 vector GiveVector();
 void Vector_Grow50(vector* vec,int index);
@@ -183,6 +184,9 @@ void HollowEllipseTool(void* a,void* b,void* c,void* d);
 void FillMaskBucket(pixel* screen,pixel* mask,Vector2 t);
 float Vector2Len(Vector2 a);
 float Vector2Lensq(Vector2 a);
+void EyeDropper(void* a,void* b,void* c,void*d);
+void LoadReference(void* a,void* b,void* c,void* d);
+void MoveReference(void* a,void* b,void* c,void* d);
 
 //rings.c
 Ring GenerateRing();
