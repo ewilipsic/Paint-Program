@@ -9,9 +9,11 @@
 
 enum State {normal,rect,ellipse,line,HollowRect,HollowEllipse,Bucket,eyedropper,moveref};
 enum Window {paint,super};
+enum Brush {circle,square,spray};
 typedef struct{
     int thickness;
     Color color;
+    enum Brush brush;
 }Pen;
 
 typedef struct {
@@ -134,6 +136,7 @@ Vector2 GetSymPoint(Vector2 p);
 void ClearMask(pixel* mask);
 void DrawSymHollowRectangle(pixel* screen,Vector2 top_left,Vector2 bottom_right,int thickness,Color color);
 void DrawObliqueRect(pixel* screen,Vector2 a,Vector2 b ,Vector2 c);
+void DrawLabels();
 
 
 //vector.c
@@ -187,6 +190,9 @@ float Vector2Lensq(Vector2 a);
 void EyeDropper(void* a,void* b,void* c,void*d);
 void LoadReference(void* a,void* b,void* c,void* d);
 void MoveReference(void* a,void* b,void* c,void* d);
+void ChangeBrushCircle(void*a , void* b,void* c,void* d);
+void ChangeBrushSquare(void*a , void* b,void* c,void* d);
+void ChangeBrushSpray(void*a , void* b,void* c,void* d);
 
 //rings.c
 Ring GenerateRing();

@@ -154,6 +154,25 @@ void MyDrawCircle(pixel* screen,Vector2 center,int radius,Color color){
     }
 }
 
+void draw_square_brush(pixel* screen, Vector2 center, int size, Color color) {
+    for (int i = -size/2; i <= size/2; i++) {
+        for (int j = -size/2; j <= size/2; j++) {
+            MyDrawPixelCanvas(screen, Vector2Sum(center, (Vector2){j, i}), color);
+        }
+    }
+}
+
+void draw_spray_brush(pixel* screen, Vector2 center, int radius, Color color) {
+    int dots = radius*6; // Number of dots to draw per call
+    for (int i = 0; i < dots; i++) {
+        int dx = rand() % (2 * radius + 1) - radius;
+        int dy = rand() % (2 * radius + 1) - radius;
+        if (dx * dx + dy * dy <= radius * radius) {
+            MyDrawPixelCanvas(screen, Vector2Sum(center, (Vector2){dx, dy}), color);
+        }
+    }
+}
+
 void MyDrawEllipse(pixel* screen,Vector2 top_left,Vector2 bottom_right,Color color){
     if(bottom_right.x < top_left.x){
         float temp = bottom_right.x;
@@ -360,7 +379,7 @@ void DrawScreen(pixel* screen){
     for(int i = 0;i<gui.num_buttons;i++){
         if(gui.buttons[i].ispressed){
        
-            DrawTextureV(gui.buttons[i].ptexture,gui.buttons[i].top_left,WHITE);
+            DrawTextureV(gui.buttons[i].texture,gui.buttons[i].top_left,(Color){200,200,200,255});
         }
         else DrawTextureV(gui.buttons[i].texture,gui.buttons[i].top_left,WHITE);
     }
@@ -407,12 +426,38 @@ void AddQSplines(pixel* screen,vector* qsplines){
     for(int i = 0;i<(qsplines->len);i+=3){
         for(int k = 0;k<100;k++){
             Vector2 p = GetSplinePointBezierQuad((qsplines->arr)[i],(qsplines->arr)[i+1],(qsplines->arr)[i+2],(float)k/100.0); //k is getting promoted
-           if(InCanvas(sym.pos1) && InCanvas(sym.pos2)){
-            MyDrawCircle(screen,
+            if(InCanvas(sym.pos1) && InCanvas(sym.pos2)){
+                switch (pen.brush){
+                case circle:
+                MyDrawCircle(screen,
                         Vector2Minus(Vector2Mult(2,Vector2Sum(a,Vector2Mult(Vector2Dot(Vector2Minus(p,a),b)/Vector2Dot(b,b),b))),p),
                          pen.thickness,pen.color);
+                break;
+                case square:
+                draw_square_brush(screen,
+                        Vector2Minus(Vector2Mult(2,Vector2Sum(a,Vector2Mult(Vector2Dot(Vector2Minus(p,a),b)/Vector2Dot(b,b),b))),p),
+                         pen.thickness,pen.color);
+                break;
+                case spray:
+                draw_spray_brush(screen,
+                        Vector2Minus(Vector2Mult(2,Vector2Sum(a,Vector2Mult(Vector2Dot(Vector2Minus(p,a),b)/Vector2Dot(b,b),b))),p),
+                         pen.thickness,pen.color);
+                break;
+                default:
+                break;
+            }
            }
-            MyDrawCircle(screen,p,pen.thickness,pen.color);
+           switch (pen.brush){
+           case circle:
+           MyDrawCircle(screen,p,pen.thickness,pen.color);
+           break;
+           case square:
+           draw_square_brush(screen,p,pen.thickness,pen.color);
+           break;
+           case spray:
+           draw_spray_brush(screen,p,pen.thickness,pen.color);
+           break;
+           }          
         }
     }
     Vector_Empty(qsplines);
@@ -425,11 +470,37 @@ void AddLines(pixel* screen,vector* lines){
         for(int k = 0;k<100;k++){
             Vector2 p = GetSplinePointLinear((lines->arr)[i],(lines->arr)[i+1],k/100.0); //k is getting type promoted
             if(InCanvas(sym.pos1) && InCanvas(sym.pos2)){
-            MyDrawCircle(screen,
+                switch (pen.brush){
+                case circle:
+                MyDrawCircle(screen,
                         Vector2Minus(Vector2Mult(2,Vector2Sum(a,Vector2Mult(Vector2Dot(Vector2Minus(p,a),b)/Vector2Dot(b,b),b))),p),
                          pen.thickness,pen.color);
+                break;
+                case square:
+                draw_square_brush(screen,
+                        Vector2Minus(Vector2Mult(2,Vector2Sum(a,Vector2Mult(Vector2Dot(Vector2Minus(p,a),b)/Vector2Dot(b,b),b))),p),
+                         pen.thickness,pen.color);
+                break;
+                case spray:
+                draw_spray_brush(screen,
+                        Vector2Minus(Vector2Mult(2,Vector2Sum(a,Vector2Mult(Vector2Dot(Vector2Minus(p,a),b)/Vector2Dot(b,b),b))),p),
+                         pen.thickness,pen.color);
+                break;
+                default:
+                break;
+            }
            }
-            MyDrawCircle(screen,p,pen.thickness,pen.color);
+           switch (pen.brush){
+           case circle:
+           MyDrawCircle(screen,p,pen.thickness,pen.color);
+           break;
+           case square:
+           draw_square_brush(screen,p,pen.thickness,pen.color);
+           break;
+           case spray:
+           draw_spray_brush(screen,p,pen.thickness,pen.color);
+           break;
+           }  
         }
         Vector_Empty(lines);
     }
@@ -468,6 +539,16 @@ void ClearMask(pixel* mask){
     for(int i = 0;i<gui.screenwidth*gui.screenheight;i++){
         mask[i] = (pixel){WHITE};
     }
+}
+
+void DrawLabels(){
+    DrawText("Save Path:",20,450,20,BLACK);
+    DrawText("Load Path:",20,490,20,BLACK);
+    DrawText("Pen Radius(ppx):",20,535,20,BLACK);
+    DrawText("Reference Path:",20,585,20,BLACK);
+    DrawText("New Width",20,635,20,BLACK);
+    DrawText("New Height",140,635,20,BLACK);
+    DrawText("Brushes:",20,410,20,BLACK);
 }
 
 

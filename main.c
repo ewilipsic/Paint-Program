@@ -391,7 +391,7 @@ int main(){
             if(CheckCollisionPointCircle(pos,sym.pos2,sym.r1)) move_sym_pos2 = true;
 
             //rotate reference
-            if(CheckCollisionPointCircle(pos,(Vector2){reference_destrect.x,reference_destrect.y},Vector2Len(reference_origin)+20) && !CheckCollisionPointCircle(pos,(Vector2){reference_destrect.x,reference_destrect.y},Vector2Len(reference_origin)) && reference_on){
+            if(CheckCollisionPointCircle(pos,(Vector2){reference_destrect.x,reference_destrect.y},Vector2Len(reference_origin)+15) && !CheckCollisionPointCircle(pos,(Vector2){reference_destrect.x,reference_destrect.y},Vector2Len(reference_origin)) && reference_on){
                 rotate_reference = true;
                 reference_rotation -= rotation_offset;
                 // if(pos.y >= reference_destrect.y){
@@ -433,6 +433,9 @@ int main(){
             Button_Ifpressed(gui.buttons[13],pos,&curdown,NULL,NULL,gui.buttons + 13);
             Button_Ifpressed(gui.buttons[14],pos,&reference,&reference_on,&reference_destrect,&reference_origin);
             Button_Ifpressed(gui.buttons[15],pos,&curdown,&moveref_p,&reference_destrect,gui.buttons + 15);
+            Button_Ifpressed(gui.buttons[16],pos,&curdown,NULL,NULL,NULL);
+            Button_Ifpressed(gui.buttons[17],pos,&curdown,NULL,NULL,NULL);
+            Button_Ifpressed(gui.buttons[18],pos,&curdown,NULL,NULL,NULL);
             
             //sliders
             for(int i = 0;i<gui.num_sliders;i++){
@@ -620,10 +623,11 @@ int main(){
         }
         BeginDrawing();
             DrawScreen(screen);
+            DrawLabels();
             DrawSymLine(pos);
             if(reference_on){
                 DrawRing((Vector2){reference_destrect.x,reference_destrect.y},
-                        Vector2Len(reference_origin),Vector2Len(reference_origin) + 20
+                        Vector2Len(reference_origin),Vector2Len(reference_origin) + 15
                         ,0,360,40,(Color){0,0,0,100});
                 DrawTexturePro(reference,
                               (Rectangle){0,0,reference.width,reference.height},
@@ -631,8 +635,6 @@ int main(){
                               reference_origin,
                               reference_rotation - rotation_offset,
                               reference_tint);
-                printf("%f %f\n",reference_destrect.x,reference_destrect.y);
-              
             }
             //.DrawQSplines(&qsplines);
             //.DrawLines(&lines);

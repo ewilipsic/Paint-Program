@@ -319,6 +319,24 @@ void MoveReference(void* a,void* b,void* c,void* d){
 
 }
 
+void ChangeBrushCircle(void*a , void* b,void* c,void* d){
+    bool* curdown = (bool*)a;
+    *curdown = false;
+    pen.brush = circle;
+}
+
+void ChangeBrushSquare(void*a , void* b,void* c,void* d){
+    bool* curdown = (bool*)a;
+    *curdown = false;
+    pen.brush = square;
+}
+
+void ChangeBrushSpray(void*a , void* b,void* c,void* d){
+    bool* curdown = (bool*)a;
+    *curdown = false;
+    pen.brush = spray;
+}
+
 
 
 
