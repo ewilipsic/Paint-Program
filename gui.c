@@ -27,7 +27,7 @@ button buttons[19] = {(button){(Vector2){20,21},(Vector2){20,20},&ScreenClearBut
                      (button){(Vector2){41,42},(Vector2){20,20},&EllipseTool,"textures\\ellipsetool.png","textures\\p.png",0,1},
                      (button){(Vector2){20,42},(Vector2){20,20},&LineTool,"textures\\linetool.png","textures\\p.png",0,1},
                      (button){(Vector2){330,658},(Vector2){19,25},&RatioLock,"textures\\ratioc.png","textures\\p.png",0,1},
-                     (button){(Vector2){65,20},(Vector2){100,20},&Bored,"textures\\bored.png"},
+                     (button){(Vector2){1500,20},(Vector2){100,20},&Bored,"textures\\bored.png"},
                      (button){(Vector2){20,63},(Vector2){20,20},&Eraser,"textures\\eraser.png","textures\\p.png",0,1},
                      (button){(Vector2){41,63},(Vector2){20,20},&HollowRectTool,"textures\\hollowrect.png","textures\\p.png",0,1},
                      (button){(Vector2){20,84},(Vector2){20,20},&FillToolActivation,"textures\\bucket.png","textures\\p.png",0,1},
