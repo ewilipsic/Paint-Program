@@ -307,12 +307,7 @@ void MyDrawSymEllipse(pixel* screen,Vector2 top_left,Vector2 bottom_right,Color 
     d = GetSymPoint((Vector2){top_left.x,bottom_right.y}); 
     Vector2 sym_center = GetSymPoint(center);
 
-    // MyDrawCircle(screen,a,4,BLACK);
-    // MyDrawCircle(screen,b,4,BLACK);
-    // MyDrawCircle(screen,c,4,BLACK);
-    // MyDrawCircle(screen,d,4,BLACK);
-    // MyDrawCircle(screen,(Vector2){((((a.x > b.x) ? b.x : a.x) > ((c.x > d.x) ? d.x : c.x)) ? ((c.x > d.x) ? d.x : c.x) : ((a.x > b.x) ? b.x : a.x)  ),((((a.y > b.y) ? b.y : a.y) > ((c.y > d.y) ? d.y : c.y)) ? ((c.y > d.y) ? d.y : c.y) : ((a.y > b.y) ? b.y : a.y)  )},4,BLUE);
-    // MyDrawCircle(screen,(Vector2){((((a.x < b.x) ? b.x : a.x) < ((c.x < d.x) ? d.x : c.x)) ? ((c.x < d.x) ? d.x : c.x) : ((a.x < b.x) ? b.x : a.x)),((((a.y < b.y) ? b.y : a.y) < ((c.y < d.y) ? d.y : c.y)) ? ((c.y < d.y) ? d.y : c.y) : ((a.y < b.y) ? b.y : a.y))},4,RED);
+   
     for(int x  = ((((a.x > b.x) ? b.x : a.x) > ((c.x > d.x) ? d.x : c.x)) ? ((c.x > d.x) ? d.x : c.x) : ((a.x > b.x) ? b.x : a.x)  );
     x < ((((a.x < b.x) ? b.x : a.x) < ((c.x < d.x) ? d.x : c.x)) ? ((c.x < d.x) ? d.x : c.x) : ((a.x < b.x) ? b.x : a.x));x++){
         for(int y  = ((((a.y > b.y) ? b.y : a.y) > ((c.y > d.y) ? d.y : c.y)) ? ((c.y > d.y) ? d.y : c.y) : ((a.y > b.y) ? b.y : a.y)  );

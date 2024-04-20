@@ -5,11 +5,13 @@ extern enum State state;
 extern enum Window window;
 extern Sym sym;
 int main(){
+    //Initialize Window
     SetConfigFlags(FLAG_MSAA_4X_HINT);
-    InitWindow(gui.screenwidth,gui.screenheight,"paint\\p.png");
+    InitWindow(gui.screenwidth,gui.screenheight,"paint");
+    //-------------------------------------------------------------------------------------------//
+    //initialize variables need by different tools
     //ratio chain
     bool ratiolock = false;
-
 
     //reference
     Texture2D reference = LoadTexture("textures");
@@ -21,7 +23,6 @@ int main(){
     Color reference_tint = (Color){255,255,255,100};
     bool rotate_reference = 0;
     Vector2 moveref_p;
-
 
     //switch case
     Vector2 pos1,pos2;
@@ -52,7 +53,7 @@ int main(){
     pixel* mask = (pixel*)malloc(gui.screenwidth*gui.screenheight*sizeof(pixel));
     ClearMask(mask);
     ClearScreen(screen,&qsplines,&lines,&points);
-    CanvasFitDim(screen,600,600);
+    CanvasFitDim(screen,550,550);
 
     //super
     VectorRing rings = GiveVectorRing();
@@ -68,9 +69,10 @@ int main(){
     float deltatime = 0.016;
 
     SetTargetFPS(60);
+    //---------------------------------------------------------------------------------------------------------//
     while(!WindowShouldClose()){  
-     
-        switch (window){
+        
+        switch (window){             // controls the current window we are on
         case super:
         //printf("speed : %f",speed);
         deltatime = GetFrameTime();
@@ -121,12 +123,16 @@ int main(){
         
 
         break;
+        //------------------------------------------------------------------------------------------------------------------------------------//
+        //switch case for paint begins
         case paint:
-     
+
         pos = GetMousePosition();
-        switch (state){
+        switch (state){  // switch case tracking active tools in paint application
+        //-------------------------------------------------------------------------------------------------------------------------------------//
+        //bottons have different tint when they are pressed so the cases for the tools also change that
+        //-------------------------------------------------------------------------------------------------------------------------//
         case moveref:
-    
         if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
             if(CheckCollisionPointRec(pos,(Rectangle){gui.buttons[15].top_left.x,gui.buttons[15].top_left.y,gui.buttons[15].dim.x,gui.buttons[15].dim.y})){
                 state = normal;
@@ -169,6 +175,14 @@ int main(){
             }
         }
         break;
+        //---------------------------------------------------------------------------------------------------------------------//
+        /*  TWO POINT TOOLS
+            the tools rect,hollowrect,ellipse,hollowellipse,line are of a type I like to call two point tools
+            
+            These all take two mouseclicks and record their positions in pos1,pos2
+            then call a function accordingly with pos1 and pos2 as part of the arguments
+            MOST OF THESE TOOLS ALSO CALL DIFFERENT FUNCTIONS DEPENDING ON IF SYMETTRY IS ON*/
+        //--------------------------------------------------------------------------------------------------------------------//
         case HollowEllipse:
         if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT)){isreleased = 1;}
         if(CheckCollisionPointRec(pos,(Rectangle){gui.buttons[12].top_left.x,gui.buttons[12].top_left.y,gui.buttons[12].dim.x,gui.buttons[12].dim.y})&& IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && isreleased){
@@ -178,7 +192,7 @@ int main(){
         }
         if(stateflag == 1
         && pos.x-1 < gui.CanvasBottomRight.x
-        && pos.x-1 > gui.CanvasTopLeft.x
+        && pos.x-1 > gui.CanvasTopLeft.x                   //get pos2
         && pos.y-1 > gui.CanvasTopLeft.y
         && pos.y < gui.CanvasBottomRight.y
         && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)
@@ -188,7 +202,7 @@ int main(){
         }
         if(stateflag == 0
         && pos.x-1 < gui.CanvasBottomRight.x
-        && pos.x-1 > gui.CanvasTopLeft.x
+        && pos.x-1 > gui.CanvasTopLeft.x                  //get pos1
         && pos.y-1 > gui.CanvasTopLeft.y
         && pos.y < gui.CanvasBottomRight.y
         && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)
@@ -260,7 +274,7 @@ int main(){
         }
         if(stateflag == 1
         && pos.x-1 < gui.CanvasBottomRight.x
-        && pos.x-1 > gui.CanvasTopLeft.x
+        && pos.x-1 > gui.CanvasTopLeft.x                              //get pos2
         && pos.y-1 > gui.CanvasTopLeft.y
         && pos.y < gui.CanvasBottomRight.y
         && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)
@@ -270,7 +284,7 @@ int main(){
         }
         if(stateflag == 0
         && pos.x-1 < gui.CanvasBottomRight.x
-        && pos.x-1 > gui.CanvasTopLeft.x
+        && pos.x-1 > gui.CanvasTopLeft.x                                //get pos1
         && pos.y-1 > gui.CanvasTopLeft.y
         && pos.y < gui.CanvasBottomRight.y
         && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)
@@ -372,10 +386,11 @@ int main(){
             gui.buttons[6].ispressed = false;
         }
         break;
-
+        //-----------------------------------------------------------------------------------------------------------------------------------//
+        //DEFAULT CASE FOR PAINT
+        //-----------------------------------------------------------------------------------------------------------------------------------//
         case normal:
-       
-        // text boxes
+        // check if hovering over text boxes
         for(int i = 0;i<gui.num_textboxes;i++){
             textbox t = gui.textboxes[i];
             if(CheckCollisionPointRec(pos,(Rectangle){t.top_left.x,t.top_left.y,t.dim.x,t.dim.y})){
@@ -386,7 +401,7 @@ int main(){
         //on click
         if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
             curdown = true;
-            //sym line
+            //check if sym line is bieng moved
             if(CheckCollisionPointCircle(pos,sym.pos1,sym.r1)) move_sym_pos1 = true;
             if(CheckCollisionPointCircle(pos,sym.pos2,sym.r1)) move_sym_pos2 = true;
 
@@ -394,12 +409,6 @@ int main(){
             if(CheckCollisionPointCircle(pos,(Vector2){reference_destrect.x,reference_destrect.y},Vector2Len(reference_origin)+15) && !CheckCollisionPointCircle(pos,(Vector2){reference_destrect.x,reference_destrect.y},Vector2Len(reference_origin)) && reference_on){
                 rotate_reference = true;
                 reference_rotation -= rotation_offset;
-                // if(pos.y >= reference_destrect.y){
-                //     rotation_offset = acosf(Vector2Dot((Vector2){100,0},Vector2Minus(pos,(Vector2){reference_destrect.x,reference_destrect.y}))/(100*Vector2Len(Vector2Minus(pos,(Vector2){reference_destrect.x,reference_destrect.y}))));
-                // }
-                // else{
-                //     rotation_offset = 2*PI - acosf(Vector2Dot((Vector2){100,0},Vector2Minus(pos,(Vector2){reference_destrect.x,reference_destrect.y}))/(100*Vector2Len(Vector2Minus(pos,(Vector2){reference_destrect.x,reference_destrect.y}))));
-                // }
                 if(pos.y >= reference_destrect.y){
                     rotation_offset = PI - acosf(Vector2Dot((Vector2){100,0},Vector2Minus(pos,(Vector2){reference_destrect.x,reference_destrect.y}))/(100*Vector2Len(Vector2Minus(pos,(Vector2){reference_destrect.x,reference_destrect.y}))));
                 }
@@ -412,11 +421,9 @@ int main(){
                 if(reference_rotation >360) reference_rotation -= 360;
             }
 
-
-
-
-
             //buttons
+            /*  The Button_IfpressedChecks if a button is pressed and if it is calls the function associated with it using arguments provided bellow
+                */
             Button_Ifpressed(gui.buttons[0],pos,screen,&qsplines,&lines,&points);
             Button_Ifpressed(gui.buttons[1],pos,screen,gui.textboxes[1].text,NULL,NULL);
             Button_Ifpressed(gui.buttons[2],pos,screen,gui.textboxes[2].text,NULL,NULL);
@@ -451,12 +458,13 @@ int main(){
         }
 
         if(curdown){
+            //set the color to white if eraser is on cause ppm doesn't support transparency
             if(!eraser_on){
                 pen.color = (Color){(int)(255 * gui.sliders[0].slide),
                                     (int)(255 * gui.sliders[1].slide),
                                     (int)(255 * gui.sliders[2].slide),255};
             }
-
+            
             if(rotate_reference){
                 if(pos.y >= reference_destrect.y){
                     rotation_offset = PI - acosf(Vector2Dot((Vector2){100,0},Vector2Minus(pos,(Vector2){reference_destrect.x,reference_destrect.y}))/(100*Vector2Len(Vector2Minus(pos,(Vector2){reference_destrect.x,reference_destrect.y}))));
@@ -475,11 +483,14 @@ int main(){
                 else moveslider = 0;
             }
 
+            // record mouse position if mouse is drawing on the canvas
             if(pos.x < gui.CanvasBottomRight.x && pos.x > gui.CanvasTopLeft.x && pos.y > gui.CanvasTopLeft.y && pos.y < gui.CanvasBottomRight.y && !move_sym_pos1 && !move_sym_pos2 && !rotate_reference){
                 screen[(int)(pos.y * gui.screenwidth + pos.x)].color = (Color){0,0,0,255};
                 Vector_Add50e(&points,(Vector2){pos.x,pos.y});
             }
-
+            //--------------------------------------------------------------------------------------------------------------------------------------------------------------//
+            /*  TO DRAW we take the points recorded and draw quadric beziers between three points and if only two points are left by the end we draw a line between the */
+            //----------------------------------------------------------------------------------------------------------------------------------------------------------------//
             if(points.len==3){
                 Vector_Add50e(&qsplines,(points.arr)[0]);                    
                 Vector_Add50e(&qsplines,(points.arr)[1]);                    
@@ -490,7 +501,6 @@ int main(){
             }
         }
         if(!curdown){
-
             if(points.len != 0){
                 int i  = 0;
                 for(;points.len-i>=3;i+=2){               
@@ -514,7 +524,6 @@ int main(){
             sym.pos2 = pos;
             if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) move_sym_pos2 = false;
         }
-
 
         if(uptextbox){
             if(uptextbox == 1){
@@ -636,14 +645,10 @@ int main(){
                               reference_rotation - rotation_offset,
                               reference_tint);
             }
-            //.DrawQSplines(&qsplines);
-            //.DrawLines(&lines);
         EndDrawing();
         }
     }
     void Button_UnloadTextures();
     CloseWindow();
     return 0;
-
-
 }

@@ -7,7 +7,9 @@
 #include<string.h>
 #include<math.h>
 
+//state tracks what tool is active
 enum State {normal,rect,ellipse,line,HollowRect,HollowEllipse,Bucket,eyedropper,moveref};
+//window tracks what window is active
 enum Window {paint,super};
 enum Brush {circle,square,spray};
 typedef struct{

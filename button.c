@@ -6,6 +6,7 @@ extern enum State state;
 #define mask(v) mask[(int)(v.y) * gui.screenwidth + (int)(v.x)].color
 #define ColorComp(d,c) d.r == c.r && d.g == c.g && d.b == c.b && d.a == c.a
 
+//Utility functions for vector2
 float Vector2Len(Vector2 a){
     return sqrtf(a.x*a.x + a.y*a.y);
 }
@@ -13,8 +14,6 @@ float Vector2Len(Vector2 a){
 float Vector2Lensq(Vector2 a){
     return (a.x*a.x + a.y*a.y);
 }
-
-
 
 Vector2 Vector2Sum(Vector2 a,Vector2 b){
     return (Vector2){a.x+b.x,a.y+b.y};
@@ -61,6 +60,7 @@ void Button_Ifpressed(button but,Vector2 cur_pos,void* a,void* b,void* c,void* d
     }
 }
 
+//functions for individual buttons
 void ScreenClearButton(void* a,void* b,void* c,void* d){
     pixel* screen = (pixel*)a;
     vector* qsplines = (vector*)b;
