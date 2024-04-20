@@ -54,18 +54,6 @@ int main(){
     ClearMask(mask);
     ClearScreen(screen,&qsplines,&lines,&points);
     CanvasFitDim(screen,550,550);
-
-    //super
-    VectorRing rings = GiveVectorRing();
-    VectorRing dead_rings = GiveVectorRing();
-    VectorRing_Insert(&rings,GenerateRing(),0); 
-    srand(35);
-    Player player  = {3.14,6,120,PI};
-    int score = 0;
-    char buf[15] = {0};
-
-
-    float speed = 100;
     float deltatime = 0.016;
 
     SetTargetFPS(60);
@@ -73,56 +61,6 @@ int main(){
     while(!WindowShouldClose()){  
         
         switch (window){             // controls the current window we are on
-        case super:
-        //printf("speed : %f",speed);
-        deltatime = GetFrameTime();
-   
-        if(rings.arr[0].radius < 500){
-            VectorRing_Insert(&rings,GenerateRing(),0);
-        }
-  
-        for(int i = 0;i<rings.len;i++){
-            (rings.arr)[i].radius = (rings.arr)[i].radius - speed*deltatime;
-        }
-   
-        for(int i = 0;i<dead_rings.len;i++){
-            (dead_rings.arr)[i].radius = (dead_rings.arr)[i].radius - speed*deltatime;
-        }
-     
-        
-        if(rings.arr[rings.len - 1].radius < player.distance -2){
-            VectorRing_Insert(&dead_rings,VectorRing_pop(&rings),0);
-            score+=1;
-        }
-        if(dead_rings.arr[dead_rings.len - 1].radius < 50) VectorRing_pop(&dead_rings);
-        if(IsKeyDown(KEY_A)){
-            player.angle = player.angle - player.speed*deltatime;
-        }
-        if(IsKeyDown(KEY_D)){
-            player.angle = player.angle + player.speed*deltatime;
-        }
-        if(player.angle > 2*PI) player.angle = player.angle - 2*PI;
-        if(player.angle < 0) player.angle = player.angle + 2*PI;
-        if((rings.arr)[rings.len-1].radius - player.distance <= 2){
-            ShouldDie(player,(rings.arr)[rings.len-1],&rings,&window,&score,&dead_rings,&speed);
-        }
-        BeginDrawing();
-            ClearBackground(RAYWHITE);
-            DrawBackground();
-            DrawRings(&rings);
-            DrawRings(&dead_rings);
-            DrawPlayer(player);
-            memset(buf,'\0',15);
-            sprintf(buf,"SCORE : %d",score);
-            DrawText(buf,30,30,60,BLACK);
-        
-        EndDrawing();
-      
-       
-        speed = speed + 0.1;
-        
-
-        break;
         //------------------------------------------------------------------------------------------------------------------------------------//
         //switch case for paint begins
         case paint:

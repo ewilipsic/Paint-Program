@@ -196,10 +196,4 @@ void ChangeBrushCircle(void*a , void* b,void* c,void* d);
 void ChangeBrushSquare(void*a , void* b,void* c,void* d);
 void ChangeBrushSpray(void*a , void* b,void* c,void* d);
 
-//rings.c
-Ring GenerateRing();
-void DrawRings(VectorRing* rings);
-void DrawPlayer(Player p);
-void DrawBackground();
-void ShouldDie(Player p,Ring r,VectorRing* rings,enum Window* w,int* score,VectorRing* dead_rings,float* speed);
 #endif

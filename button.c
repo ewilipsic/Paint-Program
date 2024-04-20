@@ -171,7 +171,7 @@ void Bored(void* a,void* b,void* c,void* d){
     enum Window* w = (enum Window*)a;
     bool* curdown = (bool*)b;
     *curdown = false;
-    *w = super; 
+    *w = paint; 
 }
 
 void Eraser(void* a,void* b,void* c,void* d){
