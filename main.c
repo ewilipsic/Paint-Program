@@ -396,7 +396,7 @@ int main(){
         }
 
         if(curdown){
-            //set the color to white if eraser is on cause ppm doesn't support transparency
+            //set the color to sliders if eraser is not on
             if(!eraser_on){
                 pen.color = (Color){(int)(255 * gui.sliders[0].slide),
                                     (int)(255 * gui.sliders[1].slide),

@@ -20,7 +20,6 @@ void Vector_Grow50(vector* vec,int index){
     vec->arr = temp;
 }
 
-
 void Vector_Add50(vector* vec,Vector2 point,int index){
     if(index + 1>vec->cap){
         Vector_Grow50(vec,index);
@@ -28,6 +27,7 @@ void Vector_Add50(vector* vec,Vector2 point,int index){
     (vec->arr)[index] = point;
     vec->len = index + 1;
 }
+
 void Vector_Add50e(vector* vec,Vector2 point){
 
     if(vec->len + 1>vec->cap){
@@ -88,7 +88,6 @@ void VectorRing_Grow50(VectorRing* vec,int index){
     vec->arr = temp;
 }
 
-
 void VectorRing_Add50(VectorRing* vec,Ring point,int index){
     if(index + 1>vec->cap){
         VectorRing_Grow50(vec,index);
@@ -96,6 +95,7 @@ void VectorRing_Add50(VectorRing* vec,Ring point,int index){
     (vec->arr)[index] = point;
     vec->len = index + 1;
 }
+
 void VectorRing_Add50e(VectorRing* vec,Ring point){
 
     if(vec->len + 1>vec->cap){
