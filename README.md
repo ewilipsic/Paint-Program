@@ -46,5 +46,7 @@ raylib.h<br>
 raymath.h<br>
 rlgl.h<br>
 
-## GUI EXAMPLE
+### How to compile-
+     gcc src/main.c src/gui.c src/pixel.c src/vector.c src/button.c -Iinclude src/include/libraylib.a -lopengl32 -lgdi32 -lwinmm -o main.exe
+### GUI EXAMPLE
 ![alt text](https://github.com/ewilipsic/CS_project/blob/main/readme.png?raw=true)
