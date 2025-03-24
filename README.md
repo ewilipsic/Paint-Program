@@ -28,7 +28,7 @@ It is a lightweight, cross-platform paint application built using the Raylib gra
 │
 │── main.exe           # Windows executable
 │
-│── README.md
+└── README.md
 </pre>
 
 #### Files-
