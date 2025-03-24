@@ -9,7 +9,25 @@ It is a lightweight, cross-platform paint application built using the Raylib gra
 - FIll Bucket
 - File operations (new, open, save)
 
-Zoom and pan canvas
+### Project Structure
+├── src/
+│   ├── main.c
+│   ├── button.c      
+│   ├── pixel.c        
+│   ├── vector.c       
+│   ├── gui.c          
+│   ├── things.h       
+│   └── include/
+│       ├── raylib.h
+│       ├── raymath.h
+│       ├── libraylib.a
+│       └── rlgl.h
+│
+├── textures/          # Icons for the buttons
+│
+├── main.exe           # Windows executable
+└── README.md
+
 #### Files-
 main.exe : Windows executable<br>
 main.c : MainLoop of the application<br>
