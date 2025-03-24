@@ -1,1 +1,1 @@
-gcc main.c gui.c pixel.c vector.c button.c -I. -lraylib -lopengl32 -lgdi32 -lwinmm  -L.
+gcc src/main.c src/gui.c src/pixel.c src/vector.c src/button.c -Iinclude src/include/libraylib.a -lopengl32 -lgdi32 -lwinmm -o main.exe
