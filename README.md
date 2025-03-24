@@ -10,24 +10,26 @@ It is a lightweight, cross-platform paint application built using the Raylib gra
 - File operations (new, open, save)
 
 ### Project Structure
-│── src/<br>
-│     ├── main.c<br>
+<pre>
+│── src
+│     ├── main.c
 │     ├── button.c  
 │     ├── pixel.c      
 │     ├── vector.c    
 │     ├── gui.c      
 │     ├── things.h   
-│     └── include/<br>
-│          ├── raylib.h<br>
-│          ├── raymath.h<br>
-│          ├── libraylib.a<br>
-│          └── rlgl.h<br>
-│<br>
-│── textures/          # Icons for the buttons<br>
-│<br>
-│── main.exe           # Windows executable<br>
-│<br>
-│── README.md<br>
+│     └── include/
+│            ├── raylib.h
+│            ├── raymath.h
+│            ├── libraylib.a
+│            └── rlgl.h
+│
+│── textures/          # Icons for the buttons
+│
+│── main.exe           # Windows executable
+│
+│── README.md
+</pre>
 
 #### Files-
 main.exe : Windows executable<br>
