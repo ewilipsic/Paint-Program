@@ -1,5 +1,15 @@
 This is a paint program made by me.<br>
+It is a lightweight, cross-platform paint application built using the Raylib graphics library. It provides a user-friendly interface for creating and editing digital artwork, similar to Microsoft Paint.
 
+### Features
+- Intuitive drawing tools (pencil, brush, eraser, etc.)
+- Color palette with customizable colors
+- Basic shape tools (line, rectangle, circle,outline)
+- Symmetry Tool
+- FIll Bucket
+- File operations (new, open, save)
+
+Zoom and pan canvas
 #### Files-
 main.exe : Windows executable<br>
 main.c : MainLoop of the application<br>
